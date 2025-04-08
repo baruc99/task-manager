@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->text('description')->nullable();
             $table->enum('status', ['pendiente', 'en progreso', 'completada'])->default('pendiente');
             $table->date('due_date')->nullable();
-            $table->enum('priority', ['low', 'medium', 'high'])->default('low');
+            $table->enum('priority', ['low', 'medium', 'high']);
             $table->enum('category', [
                 'trabajo',
                 'estudio',
