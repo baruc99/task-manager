@@ -26,7 +26,7 @@ class TaskController extends Controller
         ]);
 
         // Asignar prioridad basada en la fecha de vencimiento y el estado
-        $priority = $request->priority ?? $this->assignPriority($request->due_date, $request->status);
+        // $priority = $request->priority ?? $this->assignPriority($request->due_date, $request->status);
 
 
         // Crear la tarea con los datos validados y asignación de prioridad
@@ -35,7 +35,7 @@ class TaskController extends Controller
             'description' => $validated['description'],
             'status' => $validated['status'],
             'due_date' => $validated['due_date'],
-            'priority' => $priority,
+            'priority' => $validated['priority'],
             'category' => $validated['category'],
         ]);
 
@@ -57,13 +57,13 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'required|in:pendiente,en progreso,completada',
-            'due_date' => 'nullable|date',
+            'due_date' => 'nullable|string',
             'priority' => 'nullable|in:low,medium,high', // Verificar que la prioridad esté en los valores permitidos
             'category' => 'required|in:trabajo,estudio,casa,personal,finanzas,salud,viaje,social,tecnología',
         ]);
 
         // Recalcular la prioridad siempre, independientemente de si se envió una prioridad
-        $priority = $this->assignPriority($request->due_date, $request->status);
+        // $priority = $this->assignPriority($request->due_date, $request->status);
 
         // Actualizar la tarea con los datos validados
         $task->update([
@@ -71,7 +71,7 @@ class TaskController extends Controller
             'description' => $validated['description'],
             'status' => $validated['status'],
             'due_date' => $validated['due_date'],
-            'priority' => $priority,  // Actualiza la prioridad con el valor recalculado
+            'priority' => $validated['priority'],  // Actualiza la prioridad con el valor recalculado
             'category' => $validated['category'],
         ]);
 
